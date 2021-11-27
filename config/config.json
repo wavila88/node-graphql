@@ -1,0 +1,15 @@
+{
+  "development": {
+    "username": "sa",
+    "password": "1234",
+    "database": "AdventureWorks2019",
+    "host": "localhost",
+    "dialect": "mssql",
+    "port": 1433,
+    "dialectOptions": {
+      "driver": "SQL Server Native Client 11.0",
+      "instanceName": "WILLY\\MSINSTANCESERVER",
+      "trustedConnection": true
+    }
+  }
+}
