@@ -1,45 +1,10 @@
-var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
- 
-var schema = buildSchema(`
-type Query {
-  me: [User]
-  titles: [Profession],
- 
-}
- 
-type User {
-  id: ID
-  name: String
-}
+const { ApolloServer, gql } = require('apollo-server');
+const fs = require('file-system');
+const resolvers = require('./src/typeDef/resolver');
+const typeDefs = gql(fs.readFileSync('./src/typeDef/schema.graphql', {encoding: 'utf-8' }));
+const server = new ApolloServer({ typeDefs: typeDefs, resolvers });
 
-type Profession {
-  title: String
-  yearsExperience: Int
-  active: Boolean
-}
-  
-`);
- 
-var root = { 
-  me: GetUser([{id: 1, name: 'William'},{ id : 2, name : 'Jessika'}]),
-  titles: GetTitle([{title: 'Ingeniero', yearsExperience : 5, active: true},{title: 'Analista Bilingue', yearsExperience : 6, active: false}]),
-
-};
- 
-function GetUser(user) {
-  return user;
-}
-
-function GetTitle(profession){
-  return profession;
-}
- 
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.listen(4000, () => console.log('Now browse to localhost:4000/graphql'));
+// The `listen` method launches a web server.
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});

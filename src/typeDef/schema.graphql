@@ -1,0 +1,15 @@
+type Query {
+  getAddressData: [Address]
+}
+
+type Address {
+  AddressID: ID!,
+  AddressLine1: String,
+  AddressLine2: String,
+  City: String,
+  StateProvinceID: ID,
+  PostalCode: String,
+  SpatialLocation: String,
+  rowguid: String,
+  ModifiedDate: String
+}
